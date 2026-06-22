@@ -71,6 +71,54 @@ def leer_opcion():
     
 
 
+
+def eliminar_reserva(reservas):
+    print('\n--- ELIMINAR RESERVA ---')
+    codigo = input('Ingrese el código de la reserva a eliminar: ').strip()
+    
+    posicion, reserva = buscar_reserva_por_codigo(reservas, codigo)
+    
+    if reserva is not None:
+        reservas.pop(posicion)
+        print(f"¡La reserva con código '{codigo}' ha sido eliminada con éxito!")
+    else:
+        print("Error: No se encontró ninguna reserva con ese código.")
+
+
+def mostrar_reservas(reservas):
+    print('\n--- LISTADO DE RESERVAS ---')
+    if not reservas:
+        print("No hay reservas registradas en el sistema.")
+        return
+        
+    for idx, r in enumerate(reservas, start=1):
+        print(f"\n[{idx}] Código: {r['codigo']} | Huésped: {r['nombre']}")
+        print(f"    Estadía: {r['noches']} noches x ${r['valor_noche']:,} c/u")
+        print(f"    Monto Total: ${r['total']:,} ({r['categoria']})")
+
+
+def mostrar_estadisticas(reservas):
+    print('\n--- ESTADÍSTICAS DEL SISTEMA ---')
+    cant_reservas = len(reservas)
+    
+    if cant_reservas == 0:
+        print("No hay datos suficientes para calcular estadísticas.")
+        return
+        
+    ingresos_totales = sum(r['total'] for r in reservas)
+    promedio_ingresos = ingresos_totales / cant_reservas
+    
+    # Buscar la reserva de mayor valor
+    reserva_max = max(reservas, key=lambda x: x['total'])
+    
+    print(f"Cantidad total de reservas: {cant_reservas}")
+    print(f"Ingresos totales del hotel: ${ingresos_totales Glyphs:,}")
+    print(f"Promedio de ingresos por reserva: ${promedio_ingresos:,.2f}")
+    print(f"Reserva de mayor valor: Código {reserva_max['codigo']} de {reserva_max['nombre']} por ${reserva_max['total']:,}")
+
+
+
+
 def main():
     reservas = []
 
